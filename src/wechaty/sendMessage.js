@@ -48,9 +48,18 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
       const question = ((await msg.mentionText()) || content).trimStart().replace(`${botName}`, '').replace(`${autoReplyPrefix}`, '') // 去掉艾特的消息主体
       console.log('msg:', question)
 
-      console.log('消息翻译:', isAlphaNumeric(question))
+      if(isQueryDex(question)){
+        //是不是查询dex信息
+        const response = await getDexToolReply(question)
+        if(response.length>0){
+          for(let i=0;i<response.length;i++){
+            await room.say(response[i])
+          }
+        }
+        
 
-      if (isAlphaNumeric(question)) {
+
+      }else  if (isAlphaNumeric(question)) {
         // getReply = getServe("bitget")
         const response = await getBitgetReply(question)
         console.log('🌸🌸🌸 / bgb查询: ', response)
@@ -80,6 +89,11 @@ function isAlphaNumeric(msg) {
   // ^ 表示字符串开始，$ 表示字符串结束
   // [A-Za-z0-9]+ 表示一个或多个英文字母（大写或小写）或数字
   return /^[A-Za-z0-9]+$/.test(msg)
+}
+
+function isQueryDex(msg) {
+  // 创建一个正则表达式，匹配由英文字母和数字组成的字符串
+  return msg.trimStart().startsWith('dex')
 }
 
 /**
