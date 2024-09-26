@@ -39,17 +39,13 @@ export async function getDexToolReply(content) {
     })
 
     const data = await response.json()
-    console.error('请求全量数据:', data) // 处理请求错误
-
-    const { resutlts } = data
-    console.error('请求数据:', resutlts) // 处理请求错误
-
+    const { results } = data
     // 检查data属性是否非空
-    if (resutlts.length === 0) {
+    if (results.length === 0) {
       arrMsg[0] = `未查到dex信息: ${content}`
     } else {
-      for (let i = 0, count = 0; i < resutlts.length && count < 5; i++) {
-        arrMsg[i] = formatData(resutlts[i])
+      for (let i = 0, count = 0; i < results.length && count < 5; i++) {
+        arrMsg[i] = formatData(results[i])
       }
     }
   } catch (error) {
