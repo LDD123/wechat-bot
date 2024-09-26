@@ -9,7 +9,7 @@ export async function getDexToolReply(content) {
 
   // 访问分割后的数组中的第二个元素（索引为1，因为索引从0开始）
   const afterSpace = parts[1]
-
+  const arrMsg = []
   try {
     // const response = await fetch('https://api.bitget.com/api/v2/spot/market/tickers?symbol='+content, {
     //   agent,
@@ -41,20 +41,21 @@ export async function getDexToolReply(content) {
     const data = await response.json()
 
     const { resutlts } = data
+    console.error('请求数据:', resutlts) // 处理请求错误
+
     // 检查data属性是否非空
     if (resutlts.length === 0) {
-      return `未查到dex信息: ${content}`
+      arrMsg[0] = `未查到dex信息: ${content}`
     } else {
-      const arrMsg = []
       for (let i = 0, count = 0; i < resutlts.length && count < 5; i++) {
         arrMsg[i] = formatData(resutlts[i])
       }
-      return arrMsg
     }
   } catch (error) {
     console.error('请求失败:', error) // 处理请求错误
-    return `查寻币种: ${content}失败`
+    arrMsg[0] = `查询币种: ${content}失败`
   }
+  return arrMsg
 }
 
 function formatData(data) {
