@@ -99,8 +99,11 @@ function generateResult(results) {
 
   // 遍历results数组
   results.forEach((item) => {
-    const token = item.token // 假设每个结果项都有一个token属性
-    const liquidity = item.metrics ? item.metrics.liquidity : 0 // 假设metrics和liquidity可能存在也可能不存在
+    const {
+      id: { token },
+      metrics,
+    } = item
+    const liquidity = metrics ? metrics.liquidity : 0 // 假设metrics和liquidity可能存在也可能不存在
 
     // 如果Map中已存在此token，则比较liquidity
     if (tokenMap.has(token)) {
