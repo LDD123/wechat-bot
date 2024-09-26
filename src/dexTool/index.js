@@ -39,6 +39,7 @@ export async function getDexToolReply(content) {
     })
 
     const data = await response.json()
+    console.error('请求全量数据:', data) // 处理请求错误
 
     const { resutlts } = data
     console.error('请求数据:', resutlts) // 处理请求错误
