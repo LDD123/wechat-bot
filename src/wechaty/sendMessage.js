@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import { getBitgetReply } from '../bitget/index.js'
+import { getDexToolReply } from '../dexTool/index.js'
 // 加载环境变量
 dotenv.config()
 const env = dotenv.config().parsed // 环境参数
@@ -44,22 +45,19 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
   try {
     // 区分群聊和私聊
     // 群聊消息去掉艾特主体后，匹配自动回复前缀
-    if (isRoom && room && content.replace(`${botName}`, '').trimStart().startsWith(`${autoReplyPrefix}`)) {
+    if (isRoom && room && content.trimStart().startsWith(`${autoReplyPrefix}`)) {
       const question = ((await msg.mentionText()) || content).trimStart().replace(`${botName}`, '').replace(`${autoReplyPrefix}`, '') // 去掉艾特的消息主体
       console.log('msg:', question)
 
-      if(isQueryDex(question)){
+      if (isQueryDex(question)) {
         //是不是查询dex信息
         const response = await getDexToolReply(question)
-        if(response.length>0){
-          for(let i=0;i<response.length;i++){
+        if (response.length > 0) {
+          for (let i = 0; i < response.length; i++) {
             await room.say(response[i])
           }
         }
-        
-
-
-      }else  if (isAlphaNumeric(question)) {
+      } else if (isAlphaNumeric(question)) {
         // getReply = getServe("bitget")
         const response = await getBitgetReply(question)
         console.log('🌸🌸🌸 / bgb查询: ', response)
