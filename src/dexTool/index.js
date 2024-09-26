@@ -74,10 +74,12 @@ function formatData(data) {
 
   const fiveMinDiff = periodStats['5m'].price.usd.diff
   const oneHourDiff = periodStats['1h'].price.usd.diff
+  const oneHourSwaps = periodStats['1h'].swaps.total
   const sixHourDiff = periodStats['6h'].price.usd.diff
   const twentyFourHourDiff = periodStats['24h'].price.usd.diff
   const twentyFourHourSwaps = periodStats['24h'].swaps.total
   const twentyFourHourLiquidity = periodStats['24h'].liquidity.usd.last
+  const oneHourVolume = periodStats['1h'].volume.total
   const twentyFourHourVolume = periodStats['24h'].volume.total
 
   return `代币名称:${name},信息${symbol}-${symbolRef}  
@@ -85,12 +87,13 @@ function formatData(data) {
 当前价格:$${null == price ? 0 : price.toFixed(8)}  
 底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
 5分钟:${null == fiveMinDiff ? 0 : convertToPercentage(fiveMinDiff)}  
-1小时:${null == oneHourDiff ? 0 : convertToPercentage(oneHourDiff)}  
+1小时:${null == oneHourDiff ? 0 : convertToPercentage(oneHourDiff)},交易人数：${oneHourSwaps}  
 6小时:${null == sixHourDiff ? 0 : convertToPercentage(sixHourDiff)}  
 24小时:${null == twentyFourHourDiff ? 0 : convertToPercentage(twentyFourHourDiff)},交易人数：${twentyFourHourSwaps}  
 流动性：$${null == twentyFourHourLiquidity ? 0 : formatNumberToHumanReadable(twentyFourHourLiquidity)}  
+1小时交易量:$${null == oneHourVolume ? 0 : formatNumberToHumanReadable(oneHourVolume)}  
 24小时交易量:$${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}  
-dext评分：${dextScore.total}`
+dext评分：${dextScore.total}  `
 }
 
 function generateResult(results) {
