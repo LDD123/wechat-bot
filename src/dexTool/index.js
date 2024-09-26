@@ -82,14 +82,14 @@ function formatData(data) {
 
   return `代币名称:${name},信息${symbol}-${symbolRef}  
 代币地址:${token}  
-当前价格:${null == price ? 0 : price.toFixed(8)}  
-底池数量:${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}U  
+当前价格:$${null == price ? 0 : price.toFixed(8)}  
+底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
 5分钟:${null == fiveMinDiff ? 0 : convertToPercentage(fiveMinDiff)}  
 1小时:${null == oneHourDiff ? 0 : convertToPercentage(oneHourDiff)}  
 6小时:${null == sixHourDiff ? 0 : convertToPercentage(sixHourDiff)}  
 24小时:${null == twentyFourHourDiff ? 0 : convertToPercentage(twentyFourHourDiff)},交易人数：${twentyFourHourSwaps}  
-流动性：${null == twentyFourHourLiquidity ? 0 : formatNumberToHumanReadable(twentyFourHourLiquidity)}U  
-24小时交易量:${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}U  
+流动性：$${null == twentyFourHourLiquidity ? 0 : formatNumberToHumanReadable(twentyFourHourLiquidity)}  
+24小时交易量:$${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}  
 dext评分：${dextScore.total}`
 }
 
