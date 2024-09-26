@@ -47,7 +47,7 @@ export async function getDexToolReply(content) {
       //根据token，对查询结果进行分类，单个token取池子最大的数据
       const desResultarr = generateResult(results)
       //最后遍历查询结果
-      for (let i = 0, count = 0; i < desResultarr.length && count < 5; i++) {
+      for (let i = 0, count = 0; i < desResultarr.length && count < 3; i++) {
         arrMsg[i] = formatData(desResultarr[i])
       }
     }
@@ -83,13 +83,13 @@ function formatData(data) {
   return `代币名称:${name},信息${symbol}-${symbolRef}  
 代币地址:${token}  
 当前价格:${null == price ? 0 : price.toFixed(8)}  
-底池数量:${initialReserveRef}(${null == liquidity ? 0 : liquidity.toFixed(2)}U)  
-5分钟:${null == fiveMinDiff ? 0 : fiveMinDiff.toFixed(8)}  
-1小时:${null == oneHourDiff ? 0 : oneHourDiff.toFixed(8)}  
-6小时:${null == sixHourDiff ? 0 : sixHourDiff.toFixed(8)}  
-24小时:${null == twentyFourHourDiff ? 0 : twentyFourHourDiff.toFixed(8)},交易人数：${twentyFourHourSwaps}  
-流动性：${null == twentyFourHourLiquidity ? 0 : twentyFourHourLiquidity.toFixed(2)}  
-24小时交易量:${null == twentyFourHourVolume ? 0 : twentyFourHourVolume.toFixed(2)}  
+底池数量:${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}U  
+5分钟:${null == fiveMinDiff ? 0 : convertToPercentage(fiveMinDiff)}  
+1小时:${null == oneHourDiff ? 0 : convertToPercentage(oneHourDiff)}  
+6小时:${null == sixHourDiff ? 0 : convertToPercentage(sixHourDiff)}  
+24小时:${null == twentyFourHourDiff ? 0 : convertToPercentage(twentyFourHourDiff)},交易人数：${twentyFourHourSwaps}  
+流动性：${null == twentyFourHourLiquidity ? 0 : formatNumberToHumanReadable(twentyFourHourLiquidity)}U  
+24小时交易量:${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}U  
 dext评分：${dextScore.total}`
 }
 
@@ -121,4 +121,37 @@ function generateResult(results) {
 
   // 将Map中的值转换为数组返回
   return Array.from(tokenMap.values())
+}
+
+function formatNumberToHumanReadable(number) {
+  // 处理小数点后的数字，保留两位小数
+  const decimalPart = Math.round((number % 1) * 100) / 100
+  let numberPart = Math.floor(number)
+
+  let unit = ''
+  if (numberPart >= 1000000000) {
+    numberPart /= 1000000000
+    unit = 'B' // Billion
+  } else if (numberPart >= 1000000) {
+    numberPart /= 1000000
+    unit = 'M' // Million
+  } else if (numberPart >= 1000) {
+    numberPart /= 1000
+    unit = 'K' // Thousand
+  }
+
+  // 处理小数点后为零的情况，避免显示多余的.00
+  if (decimalPart === 0) {
+    return `${numberPart.toFixed(0)}${unit}`
+  } else {
+    // 保留两位小数
+    return `${numberPart.toFixed(2)}${unit}`
+  }
+}
+
+function convertToPercentage(number) {
+  // 将数字乘以100，并保留两位小数
+  const percentage = (number * 100).toFixed(2)
+  // 添加百分比符号
+  return `${percentage}%`
 }

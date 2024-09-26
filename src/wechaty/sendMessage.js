@@ -53,7 +53,7 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
         //是不是查询dex信息
         const response = await getDexToolReply(question)
         if (response.length > 0) {
-          for (let i = 0; i < response.length && i < 5; i++) {
+          for (let i = 0; i < response.length && i < 3; i++) {
             await room.say(response[i])
           }
         }
