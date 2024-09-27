@@ -42,6 +42,12 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
   const isBotSelf = botName === remarkName || botName === name // 是否是机器人自己
   // TODO 你们可以根据自己的需求修改这里的逻辑
   if (isBotSelf || !isText) return // 如果是机器人自己发送的消息或者消息类型不是文本则不处理
+
+  if (content.trimStart().replace(`@币圈机器人秘书`, '').replace(`${autoReplyPrefix}`, '').startsWith('help')) {
+    const tips = `\n欢迎使用7*24小时云端机器人，\n查币价：/btc\n查合约：/dex btc\n直接和机器人对话/你好\n；拉我进群，免费提供服务，另外欢迎提优化建议  `
+    await room.say(tips)
+  }
+
   try {
     // 区分群聊和私聊
     // 群聊消息去掉艾特主体后，匹配自动回复前缀
