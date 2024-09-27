@@ -44,7 +44,7 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
   if (isBotSelf || !isText) return // 如果是机器人自己发送的消息或者消息类型不是文本则不处理
 
   if (content.trimStart().replace(`@币圈机器人秘书`, '').replace(`${autoReplyPrefix}`, '').startsWith('help')) {
-    const tips = `\n欢迎使用7*24小时云端机器人，\n查币价：/btc\n查合约：/dex btc\n直接和机器人对话/你好\n；拉我进群，免费提供服务，另外欢迎提优化建议  `
+    const tips = `\n欢迎使用7*24小时云端机器人，\n查币价：/btc\n查合约：/dex btc\n直接和机器人对话:/你好\n拉我进群，免费提供服务，另外欢迎提优化建议  `
     await room.say(tips)
     return
   }
