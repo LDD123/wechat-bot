@@ -46,6 +46,7 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
   if (content.trimStart().replace(`@币圈机器人秘书`, '').replace(`${autoReplyPrefix}`, '').startsWith('help')) {
     const tips = `\n欢迎使用7*24小时云端机器人，\n查币价：/btc\n查合约：/dex btc\n直接和机器人对话/你好\n；拉我进群，免费提供服务，另外欢迎提优化建议  `
     await room.say(tips)
+    return
   }
 
   try {
@@ -59,7 +60,7 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
         //是不是查询dex信息
         const response = await getDexToolReply(question)
         if (response.length > 0) {
-          const sufix = `\n欢迎使用查币机器人，使用“/”开头，进行对话  `
+          const sufix = `\n欢迎使用查币机器人，使用“/help”查看命令  `
           for (let i = 0; i < response.length && i < 3; i++) {
             const msgTalk = response[i]
             if (i == 2 || i == response.length - 1) {
