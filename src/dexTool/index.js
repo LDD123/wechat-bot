@@ -63,27 +63,36 @@ function formatData(data) {
     name,
     symbol,
     symbolRef,
-    id: { token },
+    id: { token ,chain},
     price,
     metrics,
     periodStats,
+    token:{metrics:{totalSupply,fdv,holders},audit:{dextools:{is_honeypot,is_mintable}}},
     dextScore,
   } = data
   const initialReserveRef = metrics.initialReserveRef
   const liquidity = metrics.liquidity
-
   const fiveMinDiff = periodStats['5m'].price.usd.diff
   const oneHourDiff = periodStats['1h'].price.usd.diff
+
   const oneHourSwaps = periodStats['1h'].swaps.total
   const sixHourDiff = periodStats['6h'].price.usd.diff
   const twentyFourHourDiff = periodStats['24h'].price.usd.diff
   const twentyFourHourSwaps = periodStats['24h'].swaps.total
   const twentyFourHourLiquidity = periodStats['24h'].liquidity.usd.last
+
   const oneHourVolume = periodStats['1h'].volume.total
+  const oneHourBuyVolume = periodStats['1h'].volume.buys
+  const oneHourSellVolume = periodStats['1h'].volume.sells
+  const oneHourDiffVolumn = oneHourBuyVolume-oneHourSellVolume;
   const twentyFourHourVolume = periodStats['24h'].volume.total
+  const twentyFourHourBuyVolume = periodStats['24h'].volume.buys
+  const twentyFourHourSellVolume = periodStats['24h'].volume.sells
+  const twentyFourHourDiffVolumn = twentyFourHourBuyVolume-twentyFourHourSellVolume;
 
   return `代币名称:${name},信息${symbol}-${symbolRef}  
 代币地址:${token}  
+代币所在链:${chain}  
 当前价格:$${null == price ? 0 : price.toFixed(8)}  
 底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
 5分钟:${null == fiveMinDiff ? 0 : convertToPercentage(fiveMinDiff)}  
@@ -91,8 +100,13 @@ function formatData(data) {
 6小时:${null == sixHourDiff ? 0 : convertToPercentage(sixHourDiff)}  
 24小时:${null == twentyFourHourDiff ? 0 : convertToPercentage(twentyFourHourDiff)},交易人数：${twentyFourHourSwaps}  
 流动性：$${null == twentyFourHourLiquidity ? 0 : formatNumberToHumanReadable(twentyFourHourLiquidity)}  
-1小时交易量:$${null == oneHourVolume ? 0 : formatNumberToHumanReadable(oneHourVolume)}  
-24小时交易量:$${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}  
+市值:$${null == fdv ? 0 : formatNumberToHumanReadable(fdv)}  
+代币数量:${null == totalSupply ? 0 : formatNumberToHumanReadable(totalSupply)}  
+持有人数:${null == holders ? 0 : formatNumberToHumanReadable(holders)}  
+底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
+1小时交易量:$${null == oneHourVolume ? 0 : formatNumberToHumanReadable(oneHourVolume)}，净买入:$${null == oneHourDiffVolumn ? 0 : formatNumberToHumanReadable(oneHourDiffVolumn)}  
+24小时交易量:$${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}，净买入:$${null == twentyFourHourDiffVolumn ? 0 : formatNumberToHumanReadable(twentyFourHourDiffVolumn)}  
+是否蜜獾：${is_honeypot=="no"?'否':'是'}，Mint权限丢弃：${is_mintable=='no'?'是':'否'}  
 dext评分：${dextScore.total}  `
 }
 
@@ -153,8 +167,7 @@ function formatNumberToHumanReadable(number) {
 }
 
 function convertToPercentage(number) {
-  // 将数字乘以100，并保留两位小数
-  const percentage = (number * 100).toFixed(2)
+  const percentage = (number).toFixed(2)
   // 添加百分比符号
   return `${percentage}%`
 }
