@@ -94,19 +94,19 @@ function formatData(data) {
 代币地址:${token}  
 代币所在链:${chain}  
 当前价格:$${null == price ? 0 : price.toFixed(8)}  
-底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
+市值:$${null == fdv ? 0 : formatNumberToHumanReadable(fdv)}  
 5分钟:${null == fiveMinDiff ? 0 : convertToPercentage(fiveMinDiff)}  
 1小时:${null == oneHourDiff ? 0 : convertToPercentage(oneHourDiff)},交易人数：${oneHourSwaps}  
 6小时:${null == sixHourDiff ? 0 : convertToPercentage(sixHourDiff)}  
 24小时:${null == twentyFourHourDiff ? 0 : convertToPercentage(twentyFourHourDiff)},交易人数：${twentyFourHourSwaps}  
 流动性：$${null == twentyFourHourLiquidity ? 0 : formatNumberToHumanReadable(twentyFourHourLiquidity)}  
-市值:$${null == fdv ? 0 : formatNumberToHumanReadable(fdv)}  
 代币数量:${null == totalSupply ? 0 : formatNumberToHumanReadable(totalSupply)}  
 持有人数:${null == holders ? 0 : formatNumberToHumanReadable(holders)}  
 底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
 1小时交易量:$${null == oneHourVolume ? 0 : formatNumberToHumanReadable(oneHourVolume)}，净买入:$${null == oneHourDiffVolumn ? 0 : formatNumberToHumanReadable(oneHourDiffVolumn)}  
 24小时交易量:$${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}，净买入:$${null == twentyFourHourDiffVolumn ? 0 : formatNumberToHumanReadable(twentyFourHourDiffVolumn)}  
-是否蜜獾：${is_honeypot=="no"?'否':'是'}，Mint权限丢弃：${is_mintable=='no'?'是':'否'}  
+是否蜜獾：${is_honeypot=="no"?'否':'是'}
+Mint权限丢弃：${is_mintable=='no'?'是':'否'}  
 dext评分：${dextScore.total}  `
 }
 
