@@ -13,13 +13,14 @@ export async function getGateIoReply(content) {
     // })
     const response = await fetch(`https://api.gateio.ws/api/v4/spot/tickers?currency_pair=${content}_USDT&timezone=all`)
     const data = await response.json()
-    const {currency_pair,last,change_percentage} = data[0]
+    const gateObj= data[0]
     // 检查data属性是否非空
-    if (!currency_pair ) {
+    if (!gateObj.hasOwnProperty('currency_pair') ) {
       //调用bitget交易所查询币种
       const bitgetResponse = await getBitgetReply(content)
       return bitgetResponse
     }
+    const {currency_pair,last,change_percentage} = gateObj
     // 构造并返回所需信息
     return `${currency_pair}, Last Price: $${last}(${change_percentage}%)`
   } catch (error) {
