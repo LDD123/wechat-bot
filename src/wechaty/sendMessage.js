@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { getBitgetReply } from '../bitget/index.js'
+import { getGateIoReply } from '../gateIo/index.js'
 import { getDexToolReply } from '../dexTool/index.js'
 // 加载环境变量
 dotenv.config()
@@ -72,8 +72,7 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
         }
       } else if (isAlphaNumeric(question)) {
         // getReply = getServe("bitget")
-        const response = await getBitgetReply(question)
-        console.log('🌸🌸🌸 / bgb查询: ', response)
+        const response = await getGateIoReply(question)
         await room.say(response)
       } else {
         console.log('🌸🌸🌸 / question: ', question)
