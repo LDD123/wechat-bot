@@ -5,8 +5,6 @@ const proxy = 'socks5h://127.0.0.1:10808'
 const agent = new SocksProxyAgent(proxy)
 
 export async function getGateIoReply(content) {
-  // 拼接字符串"USDT"
-  content = content.toUpperCase() + 'USDT'
   console.log('🚀🚀🚀 / content', content)
   try {
     // const response = await fetch('https://api.bitget.com/api/v2/spot/market/tickers?symbol='+content, {
