@@ -44,7 +44,7 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
   if (isBotSelf || !isText) return // 如果是机器人自己发送的消息或者消息类型不是文本则不处理
 
   if (content.trimStart().replace(`@币圈机器人秘书 `, '').replace(`${autoReplyPrefix}`, '').startsWith('help')) {
-    const tips = `\n欢迎使用7*24小时云端机器人，\n查币价：/btc\n查合约：/dex btc\n直接和机器人对话：/你好\n欢迎提优化建议  `
+    const tips = `\n欢迎使用7*24小时云端机器人，\n查币价：/btc\n查合约：/dex 0x0d4629ff6d6ca422178dc66a21eea0dfb182e72c\n直接和机器人对话：/你好\n欢迎提优化建议  `
     await room.say(tips)
     return
   }
@@ -95,10 +95,11 @@ export async function defaultMessage(msg, bot, ServiceType = 'GPT') {
 }
 
 function isAlphaNumeric(msg) {
+  const processMsg = msg.replace(' ', '')
   // 创建一个正则表达式，匹配由英文字母和数字组成的字符串
   // ^ 表示字符串开始，$ 表示字符串结束
   // [A-Za-z0-9]+ 表示一个或多个英文字母（大写或小写）或数字
-  return /^[A-Za-z0-9]+$/.test(msg)
+  return /^[A-Za-z0-9]+$/.test(processMsg)
 }
 
 function isQueryDex(msg) {

@@ -5,10 +5,8 @@ const agent = new SocksProxyAgent(proxy)
 
 export async function getDexToolReply(content) {
   // 使用split()方法以空格为分隔符分割字符串
-  const parts = content.split(' ')
+  const afterSpace = content.trimStart().replace(`dex`, '').replace(' ', '')
 
-  // 访问分割后的数组中的第二个元素（索引为1，因为索引从0开始）
-  const afterSpace = parts[1]
   const arrMsg = []
   try {
     // const response = await fetch('https://api.bitget.com/api/v2/spot/market/tickers?symbol='+content, {
@@ -63,11 +61,16 @@ function formatData(data) {
     name,
     symbol,
     symbolRef,
-    id: { token ,chain},
+    id: { token, chain },
     price,
     metrics,
     periodStats,
-    token:{metrics:{totalSupply,fdv,holders},audit:{dextools:{is_honeypot,is_mintable}}},
+    token: {
+      metrics: { totalSupply, fdv, holders },
+      audit: {
+        dextools: { is_honeypot, is_mintable },
+      },
+    },
     dextScore,
   } = data
   const initialReserveRef = metrics.initialReserveRef
@@ -84,11 +87,11 @@ function formatData(data) {
   const oneHourVolume = periodStats['1h'].volume.total
   const oneHourBuyVolume = periodStats['1h'].volume.buys
   const oneHourSellVolume = periodStats['1h'].volume.sells
-  const oneHourDiffVolumn = oneHourBuyVolume-oneHourSellVolume;
+  const oneHourDiffVolumn = oneHourBuyVolume - oneHourSellVolume
   const twentyFourHourVolume = periodStats['24h'].volume.total
   const twentyFourHourBuyVolume = periodStats['24h'].volume.buys
   const twentyFourHourSellVolume = periodStats['24h'].volume.sells
-  const twentyFourHourDiffVolumn = twentyFourHourBuyVolume-twentyFourHourSellVolume;
+  const twentyFourHourDiffVolumn = twentyFourHourBuyVolume - twentyFourHourSellVolume
 
   return `代币名称:${name},信息${symbol}-${symbolRef}  
 代币地址:${token}  
@@ -105,8 +108,8 @@ function formatData(data) {
 底池数量:$${null == liquidity ? 0 : formatNumberToHumanReadable(liquidity)}  
 1小时交易量:$${null == oneHourVolume ? 0 : formatNumberToHumanReadable(oneHourVolume)}，净买入:$${null == oneHourDiffVolumn ? 0 : formatNumberToHumanReadable(oneHourDiffVolumn)}  
 24小时交易量:$${null == twentyFourHourVolume ? 0 : formatNumberToHumanReadable(twentyFourHourVolume)}，净买入:$${null == twentyFourHourDiffVolumn ? 0 : formatNumberToHumanReadable(twentyFourHourDiffVolumn)}  
-是否蜜獾：${is_honeypot=="no"?'否':'是'}
-Mint权限丢弃：${is_mintable=='no'?'是':'否'}  
+是否蜜獾：${is_honeypot == 'no' ? '否' : '是'}
+Mint权限丢弃：${is_mintable == 'no' ? '是' : '否'}  
 dext评分：${dextScore.total}  `
 }
 
@@ -167,7 +170,7 @@ function formatNumberToHumanReadable(number) {
 }
 
 function convertToPercentage(number) {
-  const percentage = (number).toFixed(2)
+  const percentage = number.toFixed(2)
   // 添加百分比符号
   return `${percentage}%`
 }
