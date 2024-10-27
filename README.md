@@ -10,6 +10,14 @@
   <a href="https://trendshift.io/repositories/11077" target="_blank"><img src="https://trendshift.io/api/badge/repositories/11077" alt="wangrongding%2Fwechat-bot | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
+## 贡献者们
+
+<a href="https://github.com/wangrongding/wechat-bot/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=wangrongding/wechat-bot&columns=20" />
+</a>
+
+欢迎大家提交 PR 接入更多的 ai 服务(比如扣子等...)，积极贡献更好的功能实现，让 wechat-bot 变得更强！
+
 ## 使用前需要配置的 AI 服务（目前支持 6 种，可任选其一）
 
 - 302.AI
@@ -62,6 +70,19 @@
   DIFY_API_KEY='你的key'
   # 如果需要私有化部署，请修改.env中下面的配置
   # DIFY_URL='https://[你的私有化部署地址]'
+  ```
+
+- ollama
+
+  Ollama 是一个本地化的 AI 服务，它的 API 与 OpenAI 非常接近。配置 Ollama 的过程与各种在线服务略有不同
+
+  ```sh
+  # 执行下面命令，拷贝一份 .env.example 文件为 .env
+  cp .env.example .env
+  # 填写完善 .env 文件中的内容
+  OLLAMA_URL='http://127.0.0.1:11434/api/chat'
+  OLLAMA_MODEL='qwen2.5:7b'
+  OLLAMA_SYSTEM_MESSAGE='You are a personal assistant.'
   ```
 
 - 其他  
@@ -159,13 +180,13 @@ AUTO_REPLY_PREFIX=''
 
 可以看到，自动回复都是基于 `chatgpt` 的，记得要开代理，或者填写代理地址。
 
-![](https://assets.fedtop.com/picbed/202212131123257.png)
+![](https://github.com/user-attachments/assets/1c312cf4-73d8-44a1-8f36-5ea288ac0aa4)
 
 ## 常见问题
 
 可以进交流群,一起交流探讨相关问题和解决方案，添加的时候记得备注来意。（如果项目对你有所帮助，也可以请我喝杯咖啡 ☕️ ~）
 
-| <img src="https://assets.fedtop.com/picbed/202302090947704.png" width="180px"> | <img src="https://raw.githubusercontent.com/wangrongding/image-house/master/202303151014249.JPG" width="180px"> |
+| <img src="https://github.com/user-attachments/assets/902b1a20-0ea0-4348-9ac1-b9eb6645223c" width="180px"> | <img src="https://raw.githubusercontent.com/wangrongding/image-house/master/202303151014249.JPG" width="180px"> |
 | --- | --- |
 
 ### 运行报错等问题
@@ -213,14 +234,6 @@ $ docker build . -t wechat-bot
 
 $ docker run -d --rm --name wechat-bot -v $(pwd)/.env:/app/.env wechat-bot
 ```
-
-## 贡献者们
-
-<a href="https://github.com/wangrongding/wechat-bot/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=wangrongding/wechat-bot" />
-</a>
-
-欢迎大家积极贡献更好的功能实现，让 wechat-bot 变得更强！
 
 ## Star History Chart
 

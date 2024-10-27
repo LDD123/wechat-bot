@@ -5,6 +5,7 @@ import { getDeepSeekFreeReply } from '../deepseek-free/index.js'
 import { get302AiReply } from '../302ai/index.js'
 import { getDifyReply } from '../dify/index.js'
 import { getBitgetReply } from '../bitget/index.js'
+import { getOllamaReply } from '../ollama/index.js'
 
 /**
  * 获取ai服务
@@ -27,6 +28,8 @@ export function getServe(serviceType) {
       return get302AiReply
     case 'dify':
       return getDifyReply
+    case 'ollama':
+      return getOllamaReply
     default:
       return getGptReply
   }

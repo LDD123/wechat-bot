@@ -58,7 +58,6 @@ async function onFriendShip(friendship) {
 async function onMessage(msg) {
   // 默认消息回复
   await defaultMessage(msg, bot, serviceType)
-
   // 消息分片
   // await shardingMessage(msg,bot)
 }
@@ -155,8 +154,13 @@ function handleStart(type) {
       }
       console.log('❌ 请先配置.env文件中的 DIFY_API_KEY')
       break
+    case 'ollama':
+      if (env.OLLAMA_URL && env.OLLAMA_MODEL) {
+        return botStart()
+      }
+      break
     default:
-      console.log('❌ 服务类型错误, 目前支持： ChatGPT | Kimi | Xunfei')
+      console.log('❌ 服务类型错误, 目前支持： ChatGPT | Kimi | Xunfei | DIFY | OLLAMA')
   }
 }
 
@@ -168,6 +172,7 @@ export const serveList = [
   { name: '302AI', value: '302AI' },
   { name: 'dify', value: 'dify' },
   // ... 欢迎大家接入更多的服务
+  { name: 'ollama', value: 'ollama' },
 ]
 const questions = [
   {
